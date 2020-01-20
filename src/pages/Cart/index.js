@@ -3,6 +3,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { connect } from 'react-redux';
 
 import CartItem from '../../components/CartItem';
+import { formatPrice } from '../../util/format';
 import {
   BoxCart,
   TitleCart,
@@ -16,8 +17,8 @@ import {
   ButtonTitle,
 } from './styles';
 
-function Cart({ cart }) {
-  if (cart.length === 0) {
+function Cart({ products }) {
+  if (products.length === 0) {
     return (
       <Container>
         <BoxCart>
@@ -32,7 +33,7 @@ function Cart({ cart }) {
     <Container>
       <BoxProducts>
         <List
-          data={cart}
+          data={products}
           keyExtractor={product => String(product.id)}
           renderItem={({ item }) => <CartItem item={item} />}
         />
@@ -51,7 +52,10 @@ function Cart({ cart }) {
 }
 
 const mapStateToProps = state => ({
-  cart: state.cart,
+  products: state.cart.map(product => ({
+    ...product,
+    priceFormatted: formatPrice(product.price),
+  })),
 });
 
 export default connect(mapStateToProps)(Cart);

@@ -1,7 +1,11 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { connect } from 'react-redux';
 
+import { bindActionCreators } from 'redux';
+
+import * as CartActions from '../../store/modules/cart/actions';
 import {
   Box,
   ViewTop,
@@ -18,7 +22,11 @@ import {
   SubtotalText,
 } from './styles';
 
-export default function CartItem({ item }) {
+function CartItem({ item, removeToCart, products }) {
+  function handleRemoveToCart(id) {
+    removeToCart(id);
+  }
+
   return (
     <Box>
       <ViewTop>
@@ -26,11 +34,11 @@ export default function CartItem({ item }) {
 
         <Info>
           <Title>{item.title}</Title>
-          <Price>{item.price}</Price>
+          <Price>{item.priceFormatted}</Price>
         </Info>
 
         <ViewButtonDelete>
-          <ButtonDelete>
+          <ButtonDelete onPress={() => handleRemoveToCart(item.id)}>
             <Icon name="delete-forever" size={24} color="#7159c1" />
           </ButtonDelete>
         </ViewButtonDelete>
@@ -40,7 +48,7 @@ export default function CartItem({ item }) {
           <TouchableOpacity>
             <Icon name="remove-circle-outline" size={20} color="#7159c1" />
           </TouchableOpacity>
-          <Input value="1" />
+          <Input value={String(item.amount)} />
           <TouchableOpacity>
             <Icon name="add-circle-outline" size={20} color="#7159c1" />
           </TouchableOpacity>
@@ -53,3 +61,8 @@ export default function CartItem({ item }) {
     </Box>
   );
 }
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(CartActions, dispatch);
+
+export default connect(null, mapDispatchToProps)(CartItem);
