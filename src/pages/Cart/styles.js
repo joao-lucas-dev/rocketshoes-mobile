@@ -1,5 +1,21 @@
 import styled from 'styled-components/native';
 
+export const BoxCart = styled.View`
+  width: 100%;
+  background: #fff;
+  border-radius: 5px;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+`;
+
+export const TitleCart = styled.Text`
+  font-size: 24px;
+  color: #000;
+  font-weight: bold;
+  margin-top: 10px;
+`;
+
 export const Container = styled.View`
   flex: 1;
   background: #191919;

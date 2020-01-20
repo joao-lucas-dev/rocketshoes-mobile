@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import CartItem from '../../components/CartItem';
 import {
+  BoxCart,
+  TitleCart,
   Container,
   BoxProducts,
   List,
@@ -43,6 +46,19 @@ export default function Cart() {
         'https://rocketseat-cdn.s3-sa-east-1.amazonaws.com/modulo-redux/tenis2.jpg',
     },
   ]);
+
+  const booleana = false;
+
+  if (booleana) {
+    return (
+      <Container>
+        <BoxCart>
+          <Icon name="remove-shopping-cart" color="#eee" size={60} />
+          <TitleCart>Seu carrinho está vazio</TitleCart>
+        </BoxCart>
+      </Container>
+    );
+  }
 
   return (
     <Container>

@@ -7,6 +7,8 @@ import {
   ViewTop,
   Image,
   Info,
+  ViewButtonDelete,
+  ButtonDelete,
   Title,
   Price,
   ViewBottom,
@@ -26,6 +28,12 @@ export default function CartItem({ item }) {
           <Title>{item.title}</Title>
           <Price>{item.price}</Price>
         </Info>
+
+        <ViewButtonDelete>
+          <ButtonDelete>
+            <Icon name="delete-forever" size={24} color="#7159c1" />
+          </ButtonDelete>
+        </ViewButtonDelete>
       </ViewTop>
       <ViewBottom>
         <ViewAmount>
