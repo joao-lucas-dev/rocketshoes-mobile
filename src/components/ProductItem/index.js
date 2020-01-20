@@ -17,7 +17,7 @@ import {
   TitleButton,
 } from './styles';
 
-function ProductItem({ item, addToCart }) {
+function ProductItem({ item, addToCart, amount }) {
   function handleAddToCart(product) {
     addToCart(product);
   }
@@ -31,7 +31,7 @@ function ProductItem({ item, addToCart }) {
       <Button onPress={() => handleAddToCart(item)}>
         <BasketArea>
           <Icon name="add-shopping-cart" size={16} color="#fff" />
-          <Amount>1</Amount>
+          <Amount>{amount[item.id] || 0}</Amount>
         </BasketArea>
 
         <Content>
@@ -42,7 +42,14 @@ function ProductItem({ item, addToCart }) {
   );
 }
 
+const mapStateToProps = state => ({
+  amount: state.cart.reduce((amount, product) => {
+    amount[product.id] = product.amount;
+    return amount;
+  }, {}),
+});
+
 const mapDispatchToProps = dispatch =>
   bindActionCreators(CartActions, dispatch);
 
-export default connect(null, mapDispatchToProps)(ProductItem);
+export default connect(mapStateToProps, mapDispatchToProps)(ProductItem);
