@@ -22,9 +22,17 @@ import {
   SubtotalText,
 } from './styles';
 
-function CartItem({ item, removeToCart, products }) {
+function CartItem({ item, removeToCart, updateAmount }) {
   function handleRemoveToCart(id) {
     removeToCart(id);
+  }
+
+  function decrement(product) {
+    updateAmount(product.id, product.amount - 1);
+  }
+
+  function increment(product) {
+    updateAmount(product.id, product.amount + 1);
   }
 
   return (
@@ -45,11 +53,11 @@ function CartItem({ item, removeToCart, products }) {
       </ViewTop>
       <ViewBottom>
         <ViewAmount>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => decrement(item)}>
             <Icon name="remove-circle-outline" size={20} color="#7159c1" />
           </TouchableOpacity>
           <Input value={String(item.amount)} />
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => increment(item)}>
             <Icon name="add-circle-outline" size={20} color="#7159c1" />
           </TouchableOpacity>
         </ViewAmount>
