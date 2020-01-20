@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import ProductItem from '../../components/ProductItem';
 import api from '../../services/api';
+import { formatPrice } from '../../util/format';
 import { Container, List } from './styles';
 
 export default class Home extends Component {
@@ -12,7 +13,12 @@ export default class Home extends Component {
   async componentDidMount() {
     const response = await api.get('/products');
 
-    this.setState({ products: response.data });
+    const data = response.data.map(product => ({
+      ...product,
+      priceFormatted: formatPrice(product.price),
+    }));
+
+    this.setState({ products: data });
   }
 
   render() {

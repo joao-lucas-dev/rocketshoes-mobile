@@ -1,5 +1,6 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { connect } from 'react-redux';
 
 import CartItem from '../../components/CartItem';
 import {
@@ -15,10 +16,8 @@ import {
   ButtonTitle,
 } from './styles';
 
-export default function Cart() {
-  const booleana = false;
-
-  if (booleana) {
+function Cart({ cart }) {
+  if (cart.length === 0) {
     return (
       <Container>
         <BoxCart>
@@ -32,11 +31,11 @@ export default function Cart() {
   return (
     <Container>
       <BoxProducts>
-        {/* <List
-          data={products}
+        <List
+          data={cart}
           keyExtractor={product => String(product.id)}
           renderItem={({ item }) => <CartItem item={item} />}
-        /> */}
+        />
 
         <TotalBox>
           <TotalTitle>TOTAL</TotalTitle>
@@ -50,3 +49,9 @@ export default function Cart() {
     </Container>
   );
 }
+
+const mapStateToProps = state => ({
+  cart: state.cart,
+});
+
+export default connect(mapStateToProps)(Cart);

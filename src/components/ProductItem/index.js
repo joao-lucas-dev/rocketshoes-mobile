@@ -1,6 +1,10 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { connect } from 'react-redux';
 
+import { bindActionCreators } from 'redux';
+
+import * as CartActions from '../../store/modules/cart/actions';
 import {
   Box,
   Image,
@@ -13,14 +17,18 @@ import {
   TitleButton,
 } from './styles';
 
-export default function ProductItem({ item }) {
+function ProductItem({ item, addToCart }) {
+  function handleAddToCart(product) {
+    addToCart(product);
+  }
+
   return (
     <Box>
       <Image source={{ uri: item.image }} />
       <Title>{item.title}</Title>
-      <Price>R$ {item.price}</Price>
+      <Price>{item.priceFormatted}</Price>
 
-      <Button>
+      <Button onPress={() => handleAddToCart(item)}>
         <BasketArea>
           <Icon name="add-shopping-cart" size={16} color="#fff" />
           <Amount>1</Amount>
@@ -33,3 +41,8 @@ export default function ProductItem({ item }) {
     </Box>
   );
 }
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(CartActions, dispatch);
+
+export default connect(null, mapDispatchToProps)(ProductItem);
