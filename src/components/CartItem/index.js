@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import * as CartActions from '../../store/modules/cart/actions';
+import { formatPrice } from '../../util/format';
 import {
   Box,
   ViewTop,
@@ -22,7 +23,7 @@ import {
   SubtotalText,
 } from './styles';
 
-function CartItem({ item, removeToCart, updateAmount }) {
+function CartItem({ item, removeToCart, updateAmount, subtotal }) {
   function handleRemoveToCart(id) {
     removeToCart(id);
   }
@@ -63,7 +64,7 @@ function CartItem({ item, removeToCart, updateAmount }) {
         </ViewAmount>
 
         <ViewSubtotal>
-          <SubtotalText>R$ 523,60</SubtotalText>
+          <SubtotalText>{item.subtotal}</SubtotalText>
         </ViewSubtotal>
       </ViewBottom>
     </Box>

@@ -17,7 +17,7 @@ import {
   ButtonTitle,
 } from './styles';
 
-function Cart({ products }) {
+function Cart({ products, total }) {
   if (products.length === 0) {
     return (
       <Container>
@@ -40,7 +40,7 @@ function Cart({ products }) {
 
         <TotalBox>
           <TotalTitle>TOTAL</TotalTitle>
-          <TotalPrice>R$ 1920,28</TotalPrice>
+          <TotalPrice>{total}</TotalPrice>
         </TotalBox>
 
         <Button>
@@ -54,8 +54,15 @@ function Cart({ products }) {
 const mapStateToProps = state => ({
   products: state.cart.map(product => ({
     ...product,
+    subtotal: formatPrice(product.price * product.amount),
     priceFormatted: formatPrice(product.price),
   })),
+  total: formatPrice(
+    state.cart.reduce(
+      (total, product) => total + product.price * product.amount,
+      0
+    )
+  ),
 });
 
 export default connect(mapStateToProps)(Cart);

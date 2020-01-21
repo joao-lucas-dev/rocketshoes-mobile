@@ -32,7 +32,7 @@ export const ViewAmount = styled.View`
 `;
 
 export const Amount = styled.Text`
-  font-size: 12px;
+  font-size: 10px;
   color: #fff;
 `;
 
