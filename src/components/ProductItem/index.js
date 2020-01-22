@@ -17,9 +17,9 @@ import {
   TitleButton,
 } from './styles';
 
-function ProductItem({ item, addToCart, amount }) {
-  function handleAddToCart(product) {
-    addToCart(product);
+function ProductItem({ item, addToCartRequest, amount }) {
+  function handleAddToCart(id) {
+    addToCartRequest(id);
   }
 
   return (
@@ -28,7 +28,7 @@ function ProductItem({ item, addToCart, amount }) {
       <Title>{item.title}</Title>
       <Price>{item.priceFormatted}</Price>
 
-      <Button onPress={() => handleAddToCart(item)}>
+      <Button onPress={() => handleAddToCart(item.id)}>
         <BasketArea>
           <Icon name="add-shopping-cart" size={16} color="#fff" />
           <Amount>{amount[item.id] || 0}</Amount>
