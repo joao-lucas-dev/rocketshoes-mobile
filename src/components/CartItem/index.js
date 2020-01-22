@@ -23,17 +23,17 @@ import {
   SubtotalText,
 } from './styles';
 
-function CartItem({ item, removeToCart, updateAmount, subtotal }) {
+function CartItem({ item, removeToCart, updateAmountRequest, subtotal }) {
   function handleRemoveToCart(id) {
     removeToCart(id);
   }
 
   function decrement(product) {
-    updateAmount(product.id, product.amount - 1);
+    updateAmountRequest(product.id, product.amount - 1);
   }
 
   function increment(product) {
-    updateAmount(product.id, product.amount + 1);
+    updateAmountRequest(product.id, product.amount + 1);
   }
 
   return (
