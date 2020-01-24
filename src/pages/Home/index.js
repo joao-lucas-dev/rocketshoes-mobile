@@ -1,37 +1,35 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import ProductItem from '../../components/ProductItem';
 import api from '../../services/api';
 import { formatPrice } from '../../util/format';
 import { Container, List } from './styles';
 
-export default class Home extends Component {
-  state = {
-    products: [],
-  };
+export default function Home() {
+  const [products, setProducts] = useState([]);
 
-  async componentDidMount() {
-    const response = await api.get('/products');
+  useEffect(() => {
+    async function loadProducts() {
+      const response = await api.get('/products');
 
-    const data = response.data.map(product => ({
-      ...product,
-      priceFormatted: formatPrice(product.price),
-    }));
+      const data = response.data.map(product => ({
+        ...product,
+        priceFormatted: formatPrice(product.price),
+      }));
 
-    this.setState({ products: data });
-  }
+      setProducts(data);
+    }
 
-  render() {
-    const { products } = this.state;
+    loadProducts();
+  }, []);
 
-    return (
-      <Container>
-        <List
-          data={products}
-          keyExtractor={product => String(product.id)}
-          renderItem={({ item }) => <ProductItem item={item} />}
-        />
-      </Container>
-    );
-  }
+  return (
+    <Container>
+      <List
+        data={products}
+        keyExtractor={product => String(product.id)}
+        renderItem={({ item }) => <ProductItem item={item} />}
+      />
+    </Container>
+  );
 }

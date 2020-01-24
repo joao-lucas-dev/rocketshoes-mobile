@@ -1,12 +1,9 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { connect } from 'react-redux';
-
-import { bindActionCreators } from 'redux';
+import { useDispatch } from 'react-redux';
 
 import * as CartActions from '../../store/modules/cart/actions';
-import { formatPrice } from '../../util/format';
 import {
   Box,
   ViewTop,
@@ -23,17 +20,19 @@ import {
   SubtotalText,
 } from './styles';
 
-function CartItem({ item, removeToCart, updateAmountRequest, subtotal }) {
+export default function CartItem({ item }) {
+  const dispatch = useDispatch();
+
   function handleRemoveToCart(id) {
-    removeToCart(id);
+    dispatch(CartActions.removeToCart(id));
   }
 
   function decrement(product) {
-    updateAmountRequest(product.id, product.amount - 1);
+    dispatch(CartActions.updateAmountRequest(product.id, product.amount - 1));
   }
 
   function increment(product) {
-    updateAmountRequest(product.id, product.amount + 1);
+    dispatch(CartActions.updateAmountRequest(product.id, product.amount + 1));
   }
 
   return (
@@ -70,8 +69,3 @@ function CartItem({ item, removeToCart, updateAmountRequest, subtotal }) {
     </Box>
   );
 }
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(CartActions, dispatch);
-
-export default connect(null, mapDispatchToProps)(CartItem);
